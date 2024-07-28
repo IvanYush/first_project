@@ -11,7 +11,7 @@ public class Homework1 {
 
     /*
         public static void ex1() {
-            //Написал отдельным классом
+            //Написал отдельным классом.
         }
     */
     public static void ex2() {

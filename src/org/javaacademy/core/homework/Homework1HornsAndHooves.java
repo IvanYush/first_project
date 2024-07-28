@@ -80,7 +80,4 @@ public class Homework1HornsAndHooves {
         BigDecimal profitAfterTaxes = profitBeforeTaxes.subtract(taxes);
         System.out.println("Прибыль после налогов: " + profitAfterTaxes);
     }
-
 }
-
-
