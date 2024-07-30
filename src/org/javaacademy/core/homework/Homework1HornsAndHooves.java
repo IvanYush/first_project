@@ -25,7 +25,6 @@ public class Homework1HornsAndHooves {
         incomeAll = incomeAll.setScale(2, RoundingMode.HALF_UP);
         System.out.println("Суммарный доход: " + incomeAll);
 
-
         //считаем расход с колбасы
         if (weightSausage.compareTo(BigDecimal.valueOf(1000)) < 0) {
             sausageCost = BigDecimal.valueOf(412); //себестоимость при производстве меньше 1000
