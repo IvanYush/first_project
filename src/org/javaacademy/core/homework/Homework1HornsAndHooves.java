@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 public class Homework1HornsAndHooves {
     public static void main(String[] args) {
 
-        //я из новичков, сам что-то поизучал, попробовал написать
+        // я из новичков, сам что-то поизучал, попробовал написать
         BigDecimal sausagePrice = new BigDecimal(800); //цена колбасы
         BigDecimal hamPrice = new BigDecimal(350); //цена ветчины
         BigDecimal neckPrice = new BigDecimal(500); //цена шейки
