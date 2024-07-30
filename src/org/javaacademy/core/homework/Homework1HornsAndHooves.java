@@ -1,79 +1,82 @@
 package org.javaacademy.core.homework;
 
-import java.util.Scanner;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Homework1HornsAndHooves {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        //я из новичков, но попытался решить с самостоятельным изучением
-        //переменные в double т.к. там могут быть копейки или граммы
-        double sausagePrice = 800; //цена колбасы
-        double hamPrice = 350; //цена ветчины
-        double neckPrice = 500; //цена шейки
+        //я из новичков, сам что-то поизучал, попробовал написать
+        BigDecimal sausagePrice = new BigDecimal(800); //цена колбасы
+        BigDecimal hamPrice = new BigDecimal(350); //цена ветчины
+        BigDecimal neckPrice = new BigDecimal(500); //цена шейки
 
-        double sausageCost; //себестоимость колбасы
-        double hamCost = 275; //себестоимость ветчины
-        double neckCost; //себестоимость шейки
+        BigDecimal sausageCost; //себестоимость колбасы
+        BigDecimal hamCost = new BigDecimal(275); //себестоимость ветчины
+        BigDecimal neckCost; //себестоимость шейки
 
-        System.out.println("Введите количество проданной колбасы в кг.");
-        double weightSausage = scanner.nextDouble();
-
-        System.out.println("Введите количество проданной ветчины в кг.");
-        double weightHam = scanner.nextDouble();
-
-        System.out.println("Введите количество проданной шейки в кг.");
-        double weightNeck = scanner.nextDouble();
-
-        /*
-        double weightSausage = 2000; //продано колбасы
-        double weightHam = 8511; //проданы ветчины
-        double weightNeck = 6988; //проданы шейки
-        */
+        BigDecimal weightSausage = new BigDecimal(2000); //продано колбасы
+        BigDecimal weightHam = new BigDecimal(8511); //проданы ветчины
+        BigDecimal weightNeck = new BigDecimal(6988); //проданы шейки
 
         //считаем суммарный доход
-        double incomeAll = (sausagePrice * weightSausage) + (hamPrice * weightHam) + (neckPrice * weightNeck);
+        BigDecimal incomeAll = (sausagePrice.multiply(weightSausage)).add(hamPrice.multiply(weightHam))
+                .add(neckPrice.multiply(weightNeck));
+        incomeAll = incomeAll.setScale(2, RoundingMode.HALF_UP);
         System.out.println("Суммарный доход: " + incomeAll);
 
+
         //считаем расход с колбасы
-        if (weightSausage < 1000) {
-            sausageCost = 412; //себестоимость при производстве меньше 1000
-        } else if (weightSausage >= 1000 && weightSausage < 2000) {
-            sausageCost = 408; //себестоимость при производстве от 1000 до 2000 (не включ)
+        if (weightSausage.compareTo(BigDecimal.valueOf(1000)) < 0) {
+            sausageCost = BigDecimal.valueOf(412); //себестоимость при производстве меньше 1000
+        } else if (weightSausage.compareTo(BigDecimal.valueOf(1000)) >= 0
+                && weightSausage.compareTo(BigDecimal.valueOf(2000)) < 0) {
+            sausageCost = BigDecimal.valueOf(408); //себестоимость при производстве от 1000 до 2000 (не включ)
         } else {
-            sausageCost = 404; //себестоимость при производстве от 2000
+            sausageCost = BigDecimal.valueOf(404); //себестоимость при производстве от 2000
         }
-        double expensesSausage = sausageCost * weightSausage;
+        BigDecimal expensesSausage = sausageCost.multiply(weightSausage);
 
         //считаем расход с ветчины
-        double expensesHam = hamCost * weightHam;
+        BigDecimal expensesHam = hamCost.multiply(weightHam);
 
         //считаем расход с шейки
-        if (weightNeck < 500) {
-            neckCost = 311; //себестоимость при производстве меньше 500
+        if (weightNeck.compareTo (BigDecimal.valueOf(500)) < 0) {
+            neckCost = BigDecimal.valueOf(311); //себестоимость при производстве меньше 500
         } else {
-            neckCost = 299; //себестоимость при производстве больше или равно 500
+            neckCost = BigDecimal.valueOf(299); //себестоимость при производстве больше или равно 500
         }
-        double expensesNeck = neckCost * weightNeck;
+        BigDecimal expensesNeck = neckCost.multiply(weightNeck);
 
         //суммарный расход
-        double expensesAll = expensesSausage + expensesHam + expensesNeck + 1_000_000;
+        BigDecimal expensesAll = expensesSausage.add(expensesHam).add(expensesNeck).add(BigDecimal.valueOf(1_000_000));
+        expensesAll = expensesAll.setScale(2, RoundingMode.HALF_UP);
         System.out.println("Суммарный расход: " + expensesAll);
 
         //прибыль до налогов
-        BigDecimal profitBeforeTaxes = BigDecimal.valueOf(incomeAll).subtract(BigDecimal.valueOf(expensesAll));
-        System.out.println("Прибыль до налогов: " + profitBeforeTaxes);
+        BigDecimal profitBeforeTaxes = incomeAll.subtract(expensesAll);
+        if (profitBeforeTaxes.compareTo(BigDecimal.valueOf(0)) > 0) {
+            System.out.println("Прибыль до налогов: " + profitBeforeTaxes);
+        } else {
+            System.out.println("Убыток: " + profitBeforeTaxes);
+            System.out.println("Денег нет, налогов нет");
+            System.exit(0);
+        }
 
         //налоги
         BigDecimal taxes;
         if (profitBeforeTaxes.compareTo(BigDecimal.valueOf(1_000_000)) <= 0) {
             taxes = profitBeforeTaxes.multiply(BigDecimal.valueOf(0.08));
-        } else if (profitBeforeTaxes.compareTo(BigDecimal.valueOf(1_000_000)) > 0 && profitBeforeTaxes.compareTo(BigDecimal.valueOf(2_000_000)) <= 0) {
-            taxes = ((profitBeforeTaxes.subtract(BigDecimal.valueOf(1_000_000))).multiply(BigDecimal.valueOf(0.1))).add(BigDecimal.valueOf(80_000));
+        } else if (profitBeforeTaxes.compareTo(BigDecimal.valueOf(1_000_000)) > 0
+                && profitBeforeTaxes.compareTo(BigDecimal.valueOf(2_000_000)) <= 0) {
+            taxes = ((profitBeforeTaxes.subtract(BigDecimal.valueOf(1_000_000))).multiply(BigDecimal.valueOf(0.1)))
+                    .add(BigDecimal.valueOf(1_000_000).multiply(BigDecimal.valueOf(0.08)));
         } else {
-            taxes = ((profitBeforeTaxes.subtract(BigDecimal.valueOf(2_000_000))).multiply(BigDecimal.valueOf(0.13))).add(BigDecimal.valueOf(180_000));
+            taxes = ((profitBeforeTaxes.subtract(BigDecimal.valueOf(2_000_000))).multiply(BigDecimal.valueOf(0.13)))
+                    .add(BigDecimal.valueOf(1_000_000).multiply(BigDecimal.valueOf(0.1)))
+                    .add(BigDecimal.valueOf(1_000_000).multiply(BigDecimal.valueOf(0.08)));
         }
+        taxes = taxes.setScale(2, RoundingMode.HALF_UP);
         System.out.println("Налог: " + taxes);
 
         //прибыль после налогов
