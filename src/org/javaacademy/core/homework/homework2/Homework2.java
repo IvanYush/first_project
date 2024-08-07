@@ -7,7 +7,6 @@ public class Homework2 {
         ex1();
         ex2();
         ex3();
-        ex5();
     }
 
     public static void ex1() {
