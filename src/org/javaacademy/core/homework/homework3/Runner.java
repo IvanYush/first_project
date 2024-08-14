@@ -44,7 +44,6 @@ public class Runner {
 
         SamsungFactory.makeSamsung();
         IPhoneFactory.makeIphone();
-
     }
 
     public static void ex3() {

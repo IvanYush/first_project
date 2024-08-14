@@ -18,11 +18,5 @@ public class Runner {
         Shop shop = new Shop(false, true, 3);
 
         customer.checkShop(shop);
-
-
-
-
-
-
     }
 }
