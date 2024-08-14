@@ -19,7 +19,7 @@ public class Homework2 {
         for (String word : words) {
             str += word + "-";
         }
-        System.out.println(str.substring(0, 21));
+        System.out.println(str.substring(0, str.length() - 1));
     }
 
     public static void ex2() {
