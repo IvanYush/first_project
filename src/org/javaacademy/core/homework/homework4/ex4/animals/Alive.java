@@ -2,6 +2,9 @@ package org.javaacademy.core.homework.homework4.ex4.animals;
 
 import org.javaacademy.core.homework.homework4.ex4.exception.AliveException;
 
+/**
+ * Абстрактный класс "живое"
+ */
 public abstract class Alive {
     private boolean isDead = false;
     private double weight;

@@ -16,7 +16,9 @@ public class Tiger extends Alive implements Attacking {
     public void attack(Alive anotherAlive) {
         try {
             this.cantAnything();
-            if (anotherAlive.getWeight() * 2 <= this.getWeight()) {
+            //добавил проверку статуса жизни добычи, а то тигр умирал от нападения на мёртвого слона
+            //видимо от переедания
+            if (anotherAlive.getWeight() * 2 <= this.getWeight() || anotherAlive.isDead()) {
                 anotherAlive.die();
                 this.setWeight(Math.round(((this.getWeight() + anotherAlive.getWeight() / 3.0)) * 100.0) / 100.0);
                 System.out.println("Вес тигра теперь: " + this.getWeight());
